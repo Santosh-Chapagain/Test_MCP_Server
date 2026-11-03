@@ -2,9 +2,13 @@ from fastmcp import FastMCP
 import os
 import aiosqlite  # Changed: sqlite3 → aiosqlite
 import tempfile
-# Use temporary directory which should be writable
 
-DB_PATH = r"D:\Working\FastMCP_Project\expenses.db"
+
+DB_PATH = os.environ.get(
+    "EXPENSES_DB",
+    # writable on Linux hosts
+    os.path.join(tempfile.gettempdir(), "expenses.db"),
+)
 CATEGORIES_PATH = os.path.join(os.path.dirname(__file__), "categories.json")
 
 print(f"Database path: {DB_PATH}")
